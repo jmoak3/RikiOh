@@ -6,7 +6,7 @@ end
 
 function CRikiOhGameMode:OnHitByTower( event )
 	local player = PlayerResource:GetPlayer(event.PlayerID):GetAssignedHero()
-	player:SetHealth(player:GetHealth() + event.damage + 30)
+	player:SetHealth(player:GetMaxHealth())
 end
 
 function CRikiOhGameMode:OnEntityHurt( event )
@@ -21,7 +21,7 @@ function CRikiOhGameMode:OnEntityHurt( event )
 	
 	if not killedUnit:IsRealHero() or not hero:IsRealHero() then return nil end
 
-	if killedUnit:GetHealth() > hero:GetBaseDamageMax() then return nil end
+	if killedUnit:GetHealth() > 0.5*hero:GetBaseDamageMax() then return nil end
 
 	if hero:GetClassname() == "npc_dota_hero_riki" and 
 			killedUnit:GetClassname() == "npc_dota_hero_sniper" then
@@ -39,19 +39,30 @@ end
 
 function CRikiOhGameMode:OnGameInProgress()
 	print("on game start")
+    GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 24)
 	local numPlayers = 0
 	for team = 0,(DOTA_TEAM_COUNT-1) do
 	    numPlayers = numPlayers + PlayerResource:GetPlayerCountForTeam(team)
-	end
-	for playerID = 0,numPlayers-1 do
-	    PlayerResource:SetCustomTeamAssignment(playerID, DOTA_TEAM_GOODGUYS)
-		PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_sniper", 0, 0)
 	end
 	local startingBadGuy = math.random(0, numPlayers-1)
 	print(startingBadGuy)
 	PlayerResource:SetCustomTeamAssignment(startingBadGuy, DOTA_TEAM_BADGUYS)
 	local ent = PlayerResource:ReplaceHeroWith(startingBadGuy, "npc_dota_hero_riki", 0, 0)
 	ent:ForceKill(false)
+end
+
+function CRikiOhGameMode:TurnOffBuildings()		
+	local towers = Entities:FindAllByClassname("npc_dota_tower")
+	for k, v in pairs(towers) do
+		print("Deleting towers")
+		v:ForceKill(false)
+	end
+	
+	local fountains = Entities:FindAllByClassname("ent_dota_fountain")
+	for k, v in pairs(fountains) do
+		print("Deleting fountains")
+		v:ForceKill(false)
+	end
 end
 
 function Precache( context )
@@ -72,11 +83,12 @@ function CRikiOhGameMode:InitGameMode()
 	CRikiOhGameMode.started = false
 	GameRules:GetGameModeEntity():SetFixedRespawnTime(10.0)
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(1)
-	GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen(-10.0)
+	GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen(0.0)
 	GameRules:SetCustomGameSetupRemainingTime(0.0)
 	GameRules:SetPreGameTime(35.0)
-    GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 24)
     GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_GOODGUYS, 24)
+    GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 0)
+	self:TurnOffBuildings()
 end
 
 function CRikiOhGameMode:OnThink()
