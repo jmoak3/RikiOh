@@ -72,11 +72,11 @@ function CRikiOhGameMode:InitGameMode()
 	CRikiOhGameMode.started = false
 	GameRules:GetGameModeEntity():SetFixedRespawnTime(10.0)
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(1)
+	GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen(-10.0)
 	GameRules:SetCustomGameSetupRemainingTime(0.0)
-	GameRules:SetPreGameTime(15.0)
-	for team = 0,(DOTA_TEAM_COUNT-1) do
-	    GameRules:SetCustomGameTeamMaxPlayers(team, 24)
-	end
+	GameRules:SetPreGameTime(35.0)
+    GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 24)
+    GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_GOODGUYS, 24)
 end
 
 function CRikiOhGameMode:OnThink()
