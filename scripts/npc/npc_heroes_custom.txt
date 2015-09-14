@@ -1,0 +1,52 @@
+// Dota Heroes File
+// NOTE: This is not for creating new heroes, this is for taking a currently existing hero as a template and overriding
+// the specified key-value combinations.  Use override_hero <hero_to_override> for this.
+"DOTAHeroes"
+{
+    /=================================================================================================================
+    // HERO: Riki
+    //=================================================================================================================
+    "npc_dota_hero_rikioh"
+    {
+        "override_hero"             "npc_dota_hero_riki"                        // Hero to override
+        "AttributeBaseStrength"     "1"                                         // Base strength
+        "AttributeStrengthGain"     "0.0"                                       // Strength bonus per level.
+        "AttributeBaseIntelligence" "1"                                             // Base intelligence
+        "AttributeIntelligenceGain" "0.0"                                       // Intelligence bonus per level.
+        "AttributeBaseAgility"      "100"                                       // Base agility
+        "AttributeAgilityGain"      "0.0"                                       // Agility bonus per level.
+
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+        "MovementSpeed"             "300"                                       // Speed.
+        "MovementTurnRate"          "0.35"                                      // Turning rate.
+
+        "Ability1"                  "riki_cloak"                                // Ability 1
+        "Ability2"                  ""                                          // Ability 2
+        "Ability3"                  ""                                          // Ability 3
+        "Ability4"                  ""                                          // Ability 4
+        "VisionNighttimeRange"      "1800"                                      // Range of vision at night time.
+    }
+    /=================================================================================================================
+    // HERO: Sniper
+    //=================================================================================================================
+    "npc_dota_hero_sniper_custom"
+    {
+        "override_hero"             "npc_dota_hero_sniper"                      // Hero to override
+        "AttributeBaseStrength"     "1"                                         // Base strength
+        "AttributeStrengthGain"     "0.0"                                       // Strength bonus per level.
+        "AttributeBaseIntelligence" "1"                                         // Base intelligence
+        "AttributeIntelligenceGain" "0.0"                                       // Intelligence bonus per level.
+        "AttributeBaseAgility"      "100"                                       // Base agility
+        "AttributeAgilityGain"      "0.0"                                       // Agility bonus per level.
+
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+        "MovementSpeed"             "250"                                       // Speed.
+        "MovementTurnRate"          "0.7"                                       // Turning rate.
+
+        "Ability1"                  ""                                          // Ability 1
+        "Ability2"                  ""                                          // Ability 2
+        "Ability3"                  ""                                          // Ability 3
+        "Ability4"                  ""                                          // Ability 4
+        "VisionNighttimeRange"      "1800"                                      // Range of vision at night time.
+    }
+}

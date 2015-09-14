@@ -1,0 +1,80 @@
+// Dota Heroes File
+"DOTAAbilities"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// Riki: Cloak
+	//=================================================================================================================
+	"riki_cloak"
+	{
+		"BaseClass"							"ability_datadriven"
+		"AbilityName"						"riki_cloak"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCastPoint"					"0.0"
+		"AbilityCooldown"					"10.0"
+		"AbilityManaCost"					"0"
+		"AbilityDuration"					"2.5"
+		"AbilityTextureName"				"riki_permanent_invisibility"
+		"Maxlevel"							"1"
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Riki.Smoke_Screen"
+				"Target"			"CASTER"
+			}
+			"FireEffect"
+			{
+				"EffectName" 		"particles/units/heroes/hero_riki/riki_blink_strike_start.vpcf"
+				"EffectAttachType" 	"attach_origin"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_invisible"
+				"Target"				"CASTER"
+				"Duration"				"%AbilityDuration"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_riki_cloak"
+				"Target"				"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_riki_cloak"
+			{					
+				"Duration"					"%AbilityDuration"
+				"IsDebuff"					"0"
+				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBILE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"OnAttackLanded"
+			{
+				"RemoveModifier"
+				{
+					"ModifierName" 	"modifier_invisible"
+					"Target"		"CASTER"
+				}
+
+				"RemoveModifier"
+				{
+					"ModifierName" 	"modifier_riki_cloak"
+					"Target"		"CASTER"
+				}
+			}
+		}
+	}
+}
