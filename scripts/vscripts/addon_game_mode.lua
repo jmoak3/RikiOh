@@ -4,11 +4,9 @@ if CRikiOhGameMode == nil then
 	CRikiOhGameMode = class({})
 end
 
-function CRikiOhGameMode:OnPlayerSpawn( event )
-	print("on player spawn")
-	--local player = PlayerResource:GetPlayer( event.userid )
-	local deaths = PlayerResource:GetDeaths( event.userid )
-	if deaths == 0 then PlayerResource:ReplaceHeroWith( event.userid, "npc_dota_hero_sniper", 0, 999999 ) end
+function CRikiOhGameMode:OnHitByTower( event )
+	local player = PlayerResource:GetPlayer(event.PlayerID):GetAssignedHero()
+	player:SetHealth(player:GetHealth() + event.damage + 1)
 end
 
 function CRikiOhGameMode:OnEntityKilled( event )
@@ -22,50 +20,51 @@ function CRikiOhGameMode:OnEntityKilled( event )
 	if hero:GetClassname() == "npc_dota_hero_riki" and killedUnit:GetClassname() == "npc_dota_hero_sniper" then
 		local playerID = killedUnit:GetPlayerID()
 		PlayerResource:SetCustomTeamAssignment(playerID, heroTeam )
-		PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_riki", 0, 99999):ForceKill(false)
+		PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_riki", 0, 0):ForceKill(false)
 		print("Changing Team of killed player!")
 	end
-
 end
 
 function CRikiOhGameMode:OnGameInProgress()
 	print("on game start")
 	local numPlayers = 0
-	GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_GOODGUYS, 40)
 	for team = 0, (DOTA_TEAM_COUNT-1) do
 	    numPlayers = numPlayers + PlayerResource:GetPlayerCountForTeam(team)
+		GameRules:SetCustomGameTeamMaxPlayers(team, 24)
 	end
-	for playerID = 0, numPlayers do
+	for playerID = 1,numPlayers do
 	    PlayerResource:SetCustomTeamAssignment(playerID, DOTA_TEAM_GOODGUYS)
-		PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_sniper", 0, 999999)
 	end
-	local startingBadGuy = math.random(numPlayers)
-	PlayerResource:ReplaceHeroWith(startingBadGuy, "npc_dota_hero_riki", 0, 99999):ForceKill(false)
+	local startingBadGuy = math.random(1, numPlayers) - 1
+	print(startingBadGuy)
 	PlayerResource:SetCustomTeamAssignment(startingBadGuy, DOTA_TEAM_BADGUYS)
-
+	local ent = PlayerResource:ReplaceHeroWith(startingBadGuy, "npc_dota_hero_riki", 0, 0)
+	ent:ForceKill(false)
 end
 
 function Precache( context )
+    PrecacheUnitByNameSync( "npc_dota_hero_riki", context )
+    PrecacheModel( "npc_dota_hero_riki", context )
 end
 
--- Create the game mode when we activate
 function Activate()
 	GameRules.AddonTemplate = CRikiOhGameMode()
 	GameRules.AddonTemplate:InitGameMode()
 end
 
 function CRikiOhGameMode:InitGameMode()
+	math.randomseed( Time() )
     ListenToGameEvent( "entity_killed", Dynamic_Wrap( CRikiOhGameMode, "OnEntityKilled" ), self )
-    ListenToGameEvent( "player_spawn", Dynamic_Wrap( CRikiOhGameMode, "OnPlayerSpawn" ), self )
+    ListenToGameEvent( "dota_player_take_tower_damage", Dynamic_Wrap( CRikiOhGameMode, "OnHitByTower" ), self )
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
 	CRikiOhGameMode.started = false
-	for team = 0, (DOTA_TEAM_COUNT-1) do
+	GameRules:GetGameModeEntity():SetFixedRespawnTime(10.0)
+	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(1)
+	for team = 0,(DOTA_TEAM_COUNT-1) do
 	    GameRules:SetCustomGameTeamMaxPlayers(team, 10)
 	end
-
 end
 
--- Evaluate the state of the game
 function CRikiOhGameMode:OnThink()
 	if not CRikiOhGameMode.started and GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		self:OnGameInProgress()

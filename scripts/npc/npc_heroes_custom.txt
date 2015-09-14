@@ -13,7 +13,7 @@
         "AttributeStrengthGain"     "0.0"                                       // Strength bonus per level.
         "AttributeBaseIntelligence" "1"                                             // Base intelligence
         "AttributeIntelligenceGain" "0.0"                                       // Intelligence bonus per level.
-        "AttributeBaseAgility"      "100"                                       // Base agility
+        "AttributeBaseAgility"      "200"                                       // Base agility
         "AttributeAgilityGain"      "0.0"                                       // Agility bonus per level.
 
         "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
