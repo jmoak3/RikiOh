@@ -16,7 +16,7 @@
 		"AbilityCooldown"					"10.0"
 		"AbilityManaCost"					"0"
 		"AbilityDuration"					"2.5"
-		"AbilityTextureName"				"riki_permanent_invisibility"
+		"AbilityTextureName"			"riki_permanent_invisibility"
 		"Maxlevel"							"1"
 
 		"OnSpellStart"
@@ -40,24 +40,22 @@
 			}
 			"ApplyModifier"
 			{
-				"ModifierName"			"riki_cloak"
+				"ModifierName"			"modifier_riki_cloak"
 				"Target"				"CASTER"
+				"Duration"	   			"%AbilityDuration"
 			}
 		}
 		
 		"Modifiers"
 		{
-			"riki_cloak"
+			"modifier_riki_cloak"
 			{					
-				"IsHidden"		"0"
-				"IsPassive"		"1"
-				"Duration"	    "%AbilityDuration"
+				"IsHidden"		"1"
 				"States"
 				{
-					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
 				}
-				"OnAttack"
+				"OnAttackLanded"
 				{
 					"FireEffect"
 					{
@@ -71,9 +69,32 @@
 					}
 					"RemoveModifier"
 					{
-						"ModifierName" 		"riki_cloak"
+						"ModifierName" 		"modifier_riki_cloak"
 						"Target"			"CASTER"
 					}
+				}
+			}
+		}
+	}
+	//=================================================================================================================
+	// Riki: Blur
+	//=================================================================================================================
+	"riki_blur"
+	{
+		"BaseClass"							"ability_datadriven"
+		"AbilityName"						"riki_blur"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"				"phantom_assassin_blur"
+		"Maxlevel"							"1"
+		
+		"Modifiers"
+		{
+			"modifier_riki_blur"
+			{				
+				"Passive" "1"
+				"States"
+				{
+					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"	 "MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}

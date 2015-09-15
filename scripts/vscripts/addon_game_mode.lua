@@ -4,11 +4,6 @@ if CRikiOhGameMode == nil then
 	CRikiOhGameMode = class({})
 end
 
-function CRikiOhGameMode:OnHitByTower( event )
-	local player = PlayerResource:GetPlayer(event.PlayerID):GetAssignedHero()
-	player:SetHealth(player:GetMaxHealth())
-end
-
 function CRikiOhGameMode:OnEntityHurt( event )
 	if event.entindex_killed == nil or event.entindex_attacker == nil then return nil end
 
@@ -54,13 +49,16 @@ end
 function CRikiOhGameMode:TurnOffBuildings()		
 	local towers = Entities:FindAllByClassname("npc_dota_tower")
 	for k, v in pairs(towers) do
-		print("Deleting towers")
 		v:ForceKill(false)
 	end
 	
 	local fountains = Entities:FindAllByClassname("ent_dota_fountain")
 	for k, v in pairs(fountains) do
-		print("Deleting fountains")
+		v:ForceKill(false)
+	end
+	
+	local racks = Entities:FindAllByClassname("npc_dota_barracks")
+	for k, v in pairs(racks) do
 		v:ForceKill(false)
 	end
 end
@@ -78,31 +76,36 @@ end
 function CRikiOhGameMode:InitGameMode()
 	math.randomseed( Time() )
     ListenToGameEvent( "entity_hurt", Dynamic_Wrap( CRikiOhGameMode, "OnEntityHurt" ), self )
-    ListenToGameEvent( "dota_player_take_tower_damage", Dynamic_Wrap( CRikiOhGameMode, "OnHitByTower" ), self )
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
 	CRikiOhGameMode.started = false
 	GameRules:GetGameModeEntity():SetFixedRespawnTime(10.0)
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(1)
 	GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen(0.0)
+	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_sniper")
 	GameRules:SetCustomGameSetupRemainingTime(0.0)
 	GameRules:SetPreGameTime(35.0)
     GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_GOODGUYS, 24)
     GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 0)
 	self:TurnOffBuildings()
+	
 end
 
 function CRikiOhGameMode:OnThink()
 	if not CRikiOhGameMode.started and GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		self:OnGameInProgress()
 		CRikiOhGameMode.started = true
-		GameRules:SendCustomMessage("The Riki has been selected! Survive for 5 minutes, Snipers!", 
+		GameRules:SendCustomMessage("The Riki has been selected! Survive for 10 minutes, Snipers!", 
 									DOTA_TEAM_GOODGUYS, 1)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		local creeps = Entities:FindAllByClassname("npc_dota_creep_lane")
+		for k, v in pairs(creeps) do
+			v:ForceKill(false)
+		end
 		local survivors = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
 		if survivors == 0 then
 			GameRules:MakeTeamLose(DOTA_TEAM_GOODGUYS)
 			GameRules:SendCustomMessage("The Rikis Win!", DOTA_TEAM_GOODGUYS, 1)
-		elseif GameRules:GetDOTATime(false, false) > 300.0 then
+		elseif GameRules:GetDOTATime(false, false) > 600.0 then
 			GameRules:MakeTeamLose(DOTA_TEAM_BADGUYS)
 			GameRules:SendCustomMessage("The Snipers Win!", DOTA_TEAM_GOODGUYS, 1)
 		end
