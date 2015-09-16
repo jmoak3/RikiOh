@@ -16,7 +16,7 @@ function CRikiOhGameMode:OnEntityHurt( event )
 	
 	if not killedUnit:IsRealHero() or not hero:IsRealHero() then return nil end
 
-	if killedUnit:GetHealth() > 0.5*hero:GetBaseDamageMax() then return nil end
+	if killedUnit:GetHealth() > 0.4*hero:GetBaseDamageMax() then return nil end
 
 	if hero:GetClassname() == "npc_dota_hero_riki" and 
 			killedUnit:GetClassname() == "npc_dota_hero_sniper" then
@@ -25,8 +25,9 @@ function CRikiOhGameMode:OnEntityHurt( event )
 		PlayerResource:SetCustomTeamAssignment(playerID, DOTA_TEAM_BADGUYS)
 		local ent = PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_riki", 0, 0)
 		ent:ForceKill(false)
-		local playerName = PlayerResource:GetPlayerName(killedUnit:GetPlayerOwnerID()-1)
-		print(playerName)
+		PlayerResource:SetGold(playerID, 675, true)
+		--local playerName = PlayerResource:GetPlayerName(killedUnit:GetPlayerOwnerID())
+		--print(playerName)
 		GameRules:SendCustomMessage("Another Sniper joins the Rikis!", DOTA_TEAM_GOODGUYS, 1)
 		print("Changing Team of killed player!")
 	end
@@ -44,6 +45,7 @@ function CRikiOhGameMode:OnGameInProgress()
 	PlayerResource:SetCustomTeamAssignment(startingBadGuy, DOTA_TEAM_BADGUYS)
 	local ent = PlayerResource:ReplaceHeroWith(startingBadGuy, "npc_dota_hero_riki", 0, 0)
 	ent:ForceKill(false)
+	PlayerResource:SetGold(startingBadGuy, 675, true)
 end
 
 function CRikiOhGameMode:TurnOffBuildings()		
@@ -82,6 +84,7 @@ function CRikiOhGameMode:InitGameMode()
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(1)
 	GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen(0.0)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_sniper")
+	GameRules:GetGameModeEntity():SetLoseGoldOnDeath(false)
 	GameRules:SetCustomGameSetupRemainingTime(0.0)
 	GameRules:SetPreGameTime(35.0)
     GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_GOODGUYS, 24)
