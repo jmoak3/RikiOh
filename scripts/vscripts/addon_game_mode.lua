@@ -49,11 +49,29 @@ function CRikiOhGameMode:OnGameInProgress()
 end
 
 function CRikiOhGameMode:PrepareBuildings()		
-	local towers = Entities:FindAllByClassname("npc_dota_tower")
-	for k, v in pairs(towers) do
-		v:ForceKill(false)
-	end
-	
+	local towers = Entities:FindByName(nil, "dota_goodguys_tower1_top")
+	towers:ForceKill(false)
+	towers = Entities:FindByName(nil, "dota_goodguys_tower1_mid")
+	towers:ForceKill(false)
+	towers = Entities:FindByName(nil, "dota_goodguys_tower1_bot")
+	towers:ForceKill(false)
+	towers = Entities:FindByName(nil, "dota_goodguys_tower2_top")
+	towers:ForceKill(false)
+	towers = Entities:FindByName(nil, "dota_goodguys_tower2_mid")
+	towers:ForceKill(false)
+	towers = Entities:FindByName(nil, "dota_goodguys_tower2_bot")
+	towers:ForceKill(false)
+	towers = Entities:FindByName(nil, "dota_goodguys_tower3_top")
+	towers:ForceKill(false)
+	towers = Entities:FindByName(nil, "dota_goodguys_tower3_mid")
+	towers:ForceKill(false)
+	towers = Entities:FindByName(nil, "dota_goodguys_tower3_bot")
+	towers:ForceKill(false)
+	towers = Entities:FindByName(nil, "dota_goodguys_tower4_top")
+	towers:ForceKill(false)
+	towers = Entities:FindByName(nil, "dota_goodguys_tower4_bot")
+	towers:ForceKill(false)
+
 	local fountains = Entities:FindAllByClassname("ent_dota_fountain")
 	for k, v in pairs(fountains) do
 		v:ForceKill(false)
@@ -64,9 +82,9 @@ function CRikiOhGameMode:PrepareBuildings()
 		v:ForceKill(false)
 	end
 		
-	local fort = Entities:FindAllByName("dota_goodguys_fort")
-	for k, v in pairs(fort) do
-		v:SetBaseMaxHealth(500)
+	local goodfort = Entities:FindAllByName("dota_goodguys_fort")
+	for k, v in pairs(goodfort) do
+		v:SetBaseMaxHealth(300)
 	end
 end
 
