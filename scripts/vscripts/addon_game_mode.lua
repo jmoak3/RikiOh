@@ -48,7 +48,7 @@ function CRikiOhGameMode:OnGameInProgress()
 	PlayerResource:SetGold(startingBadGuy, 675, true)
 end
 
-function CRikiOhGameMode:TurnOffBuildings()		
+function CRikiOhGameMode:PrepareBuildings()		
 	local towers = Entities:FindAllByClassname("npc_dota_tower")
 	for k, v in pairs(towers) do
 		v:ForceKill(false)
@@ -62,6 +62,11 @@ function CRikiOhGameMode:TurnOffBuildings()
 	local racks = Entities:FindAllByClassname("npc_dota_barracks")
 	for k, v in pairs(racks) do
 		v:ForceKill(false)
+	end
+	
+	local fort = Entities:FindAllByClassname("npc_dota_fort")
+	for k, v in pairs(fort) do
+		v:SetBaseMaxHealth(600)
 	end
 end
 
@@ -81,7 +86,7 @@ function CRikiOhGameMode:InitGameMode()
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
 	CRikiOhGameMode.started = false
 	GameRules:GetGameModeEntity():SetFixedRespawnTime(10.0)
-	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(1)
+	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(3)
 	GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen(0.0)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_sniper")
 	GameRules:GetGameModeEntity():SetLoseGoldOnDeath(false)
@@ -89,7 +94,7 @@ function CRikiOhGameMode:InitGameMode()
 	GameRules:SetPreGameTime(35.0)
     GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_GOODGUYS, 24)
     GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 0)
-	self:TurnOffBuildings()
+	self:PrepareBuildings()
 	
 end
 
@@ -102,6 +107,10 @@ function CRikiOhGameMode:OnThink()
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		local creeps = Entities:FindAllByClassname("npc_dota_creep_lane")
 		for k, v in pairs(creeps) do
+			v:ForceKill(false)
+		end
+		local siege = Entities:FindAllByClassname("npc_dota_creep_siege")
+		for k, v in pairs(siege) do
 			v:ForceKill(false)
 		end
 		local survivors = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
