@@ -63,10 +63,10 @@ function CRikiOhGameMode:PrepareBuildings()
 	for k, v in pairs(racks) do
 		v:ForceKill(false)
 	end
-	
-	local fort = Entities:FindAllByClassname("npc_dota_fort")
+		
+	local fort = Entities:FindAllByName("dota_goodguys_fort")
 	for k, v in pairs(fort) do
-		v:SetBaseMaxHealth(600)
+		v:SetBaseMaxHealth(500)
 	end
 end
 
