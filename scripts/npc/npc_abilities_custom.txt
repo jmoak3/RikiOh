@@ -15,7 +15,7 @@
 		"AbilityCastPoint"					"0.0"
 		"AbilityCooldown"					"10.0"
 		"AbilityManaCost"					"0"
-		"AbilityDuration"					"2.5"
+		"AbilityDuration"					"2"
 		"AbilityTextureName"			"riki_permanent_invisibility"
 		"Maxlevel"							"1"
 
@@ -55,7 +55,7 @@
 				{
 					"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
 				}
-				"OnAttackLanded"
+				"OnAttack"
 				{
 					"FireEffect"
 					{

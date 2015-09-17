@@ -1,0 +1,12 @@
+Rikinfection is a challenging, asymetrical multiplayer game for 5 or more players. 
+
+At 0:00, one player is randomly chosen to be Riki while the rest are Snipers. 
+The Snipers must defend themselves and their ancient against the Rikis for 10 minutes.
+
+If a Sniper falls to a Riki, the Sniper will respawn as a Riki on the opposite team! 
+
+Buy wards, salves, and other items to help defend... or to hunt!
+
+Are you and your fellow Snipers coordinated enough to survive? 
+
+The stats and abilities of the characters have been altered for balance.

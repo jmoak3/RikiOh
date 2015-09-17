@@ -1,0 +1,70 @@
+
+// Dota Abilities Override File
+"DOTAAbilities"
+{
+	"Version"		"1"
+	
+	"item_boots"
+	{
+		"ItemCost"						"2000"
+	}
+	
+	"item_flask"
+	{
+		"ItemCost"						"600"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"buff_duration"			"1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"total_health"			"2000"
+			}
+		}
+	}
+	
+	"item_broadsword"
+	{
+		"ItemCost"						"2000"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"0"
+			}
+		}
+	}
+	
+	"item_chainmail"
+	{
+		"ItemCost"						"2000"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"0"
+			}
+		}
+	}
+	
+	"item_ward_sentry"
+	{
+		"ItemCost"						"500"
+	}
+	
+	"item_ward_observer"
+	{
+		"ItemCost"						"400"
+	}
+	
+	"item_gem"
+	{
+		"ItemCost"						"2000"
+	}
+}

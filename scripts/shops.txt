@@ -1,0 +1,13 @@
+"dota_shops"
+{
+	"consumables"
+	{
+		"item"		"item_gem"		
+		"item"		"item_ward_observer"
+		"item"		"item_ward_sentry"	
+		"item"		"item_broadsword"		
+		"item"		"item_boots"		
+		"item"		"item_chainmail"
+		"item"		"item_flask"	
+	}
+}
