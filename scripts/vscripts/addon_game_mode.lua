@@ -51,6 +51,11 @@ function CRikiOhGameMode:PrepareBuildings()
 	for k, v in pairs(badfort) do
 		v:SetBaseMaxHealth(12000)
 	end
+	
+	local runes = Entities:FindAllByName("dota_item_rune_spawner")
+	for k, v in pairs(runes) do
+		v:Destroy()
+	end
 end
 
 function CRikiOhGameMode:SpawnAsRiki(playerID)
@@ -100,29 +105,32 @@ function CRikiOhGameMode:OnEntitySpawn(event)
 	--DELETE IF CREEP/SIEGE
 	local spawnedEnt = EntIndexToHScript( event.entindex )
 	if spawnedEnt == nil then return end
+	
 	if spawnedEnt:GetClassname() == "npc_dota_creep_lane" or 
 				spawnedEnt:GetClassname() == "npc_dota_creep_siege" then
 		spawnedEnt:ForceKill(false)
 	end
 	
 	--PLAYER PORTION
-	if not spawnedEnt:IsRealHero() then return nil end
-	
-	if spawnedEnt:GetClassname() == "npc_dota_hero_riki" then
-		spawnedEnt:GetAbilityByIndex(0):SetLevel(1)
-		spawnedEnt:GetAbilityByIndex(1):SetLevel(1)
-		spawnedEnt:SetAbilityPoints(0)
-	elseif spawnedEnt:GetClassname() == "npc_dota_hero_sniper" then
-		spawnedEnt:GetAbilityByIndex(0):SetLevel(1)
-		spawnedEnt:SetAbilityPoints(0)
+	if spawnedEnt:IsRealHero() then
+		if spawnedEnt:GetClassname() == "npc_dota_hero_riki" then
+			spawnedEnt:GetAbilityByIndex(0):SetLevel(1)
+			spawnedEnt:GetAbilityByIndex(1):SetLevel(1)
+			spawnedEnt:SetAbilityPoints(0)
+		elseif spawnedEnt:GetClassname() == "npc_dota_hero_sniper" then
+			spawnedEnt:GetAbilityByIndex(0):SetLevel(1)
+			spawnedEnt:SetAbilityPoints(0)
+		end
+		
+		if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then	
+			spawnedEnt:SetAbilityPoints(0)
+			local playerID = spawnedEnt:GetPlayerOwnerID()
+			PlayerResource:SetGold(playerID, 0, false)
+			PlayerResource:SetGold(playerID, 2000, true)
+		end
 	end
 	
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then	
-		spawnedEnt:SetAbilityPoints(0)
-		local playerID = spawnedEnt:GetPlayerOwnerID()
-		PlayerResource:SetGold(playerID, 0, false)
-		PlayerResource:SetGold(playerID, 2000, true)
-	end
+	
 end
 
 function CRikiOhGameMode:OnPlayerLevel(event)	
@@ -164,6 +172,11 @@ function CRikiOhGameMode:InitGameMode()
 	GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen(0.0)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_sniper")
 	GameRules:GetGameModeEntity():SetLoseGoldOnDeath(false)
+	GameRules:GetGameModeEntity():SetRuneEnabled(0, false)
+	GameRules:GetGameModeEntity():SetRuneEnabled(1, false)
+	GameRules:GetGameModeEntity():SetRuneEnabled(2, false)
+	GameRules:GetGameModeEntity():SetRuneEnabled(3, false)
+	GameRules:GetGameModeEntity():SetRuneEnabled(4, false)
 	GameRules:SetHeroSelectionTime(30.0)
 	GameRules:SetGoldPerTick(0)
 	GameRules:SetPreGameTime(35.0)

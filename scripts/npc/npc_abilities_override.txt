@@ -61,11 +61,13 @@
 	"item_ward_observer"
 	{
 		"ItemCost"						"400"
+		"ItemStockInitial"				"1000"
 	}
 	
 	"item_gem"
 	{
 		"ItemCost"						"3000"
+		"ItemStockInitial"				"1"
 	}
 	
 	
