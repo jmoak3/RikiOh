@@ -10,4 +10,52 @@
 		"item"		"item_chainmail"
 		"item"		"item_flask"	
 	}
+	
+	"attributes"
+	{
+	}
+
+	"weapons_armor"
+	{
+	}
+			
+	"misc"
+	{			
+	}	
+	
+	"basics"
+	{			
+	}
+
+	"support"
+	{	
+	}
+				
+	"magics"			
+	{
+	}
+		
+	"defense"
+	{				
+	}
+			
+	"weapons"
+	{			
+	}
+					
+	"artifacts"
+	{	
+	}
+
+	"sideshop1"
+	{
+	}
+
+	"sideshop2"
+	{
+	}
+	
+	"secretshop"
+	{
+	}	
 }

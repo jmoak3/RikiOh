@@ -112,6 +112,9 @@ function CRikiOhGameMode:OnEntitySpawn(event)
 		spawnedEnt:GetAbilityByIndex(0):SetLevel(1)
 		spawnedEnt:GetAbilityByIndex(1):SetLevel(1)
 		spawnedEnt:SetAbilityPoints(0)
+	elseif spawnedEnt:GetClassname() == "npc_dota_hero_sniper" then
+		spawnedEnt:GetAbilityByIndex(0):SetLevel(1)
+		spawnedEnt:SetAbilityPoints(0)
 	end
 	
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then	
@@ -173,7 +176,7 @@ function CRikiOhGameMode:OnThink()
 	if not CRikiOhGameMode.started and GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		self:OnGameInProgress()
 		CRikiOhGameMode.started = true
-		GameRules:SendCustomMessage("The Riki has been selected! Survive for 10 minutes, Snipers!", 
+		GameRules:SendCustomMessage("The Riki has been selected! Protect your ancient for 10 minutes, Snipers!", 
 									DOTA_TEAM_GOODGUYS, 1)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		local survivors = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)

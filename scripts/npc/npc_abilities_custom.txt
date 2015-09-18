@@ -76,6 +76,7 @@
 			}
 		}
 	}
+	
 	//=================================================================================================================
 	// Riki: Blur
 	//=================================================================================================================
@@ -95,6 +96,56 @@
 				"States"
 				{
 					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"	 "MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Sniper: Shield
+	//=================================================================================================================
+	"sniper_shield"
+	{
+		"BaseClass"							"ability_datadriven"
+		"AbilityName"						"sniper_shield"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCastPoint"					"0.0"
+		"AbilityCooldown"					"2.0"
+		"AbilityManaCost"					"0"
+		"AbilityDuration"					"0.5"
+		"AbilityTextureName"				"faceless_void_time_lock"
+		"Maxlevel"							"1"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_sniper_shield"
+				"Target"				"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_sniper_shield"
+			{					
+				"Duration"				"%AbilityDuration"
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+								
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"					"CASTER"
+						"EffectName" 				"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+						"EffectAttachType" 			"attach_origin"
+						"EffectColorA" 				"255 255 0"
+						"EffectLifeDurationScale" 	"0.2"
+					}
 				}
 			}
 		}
