@@ -13,9 +13,9 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_1"
 		"AbilityCastPoint"					"0.0"
-		"AbilityCooldown"					"10.0"
+		"AbilityCooldown"					"7.0"
 		"AbilityManaCost"					"0"
-		"AbilityDuration"					"2"
+		"AbilityDuration"					"2.0"
 		"AbilityTextureName"			"riki_permanent_invisibility"
 		"Maxlevel"							"1"
 

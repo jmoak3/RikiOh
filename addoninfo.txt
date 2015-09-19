@@ -1,6 +1,6 @@
 "AddonInfo"
 {
-	maps			"dota"
+	maps			"rikinfection"
 	"IsPlayable"	"1"
 	"dota"
 	{

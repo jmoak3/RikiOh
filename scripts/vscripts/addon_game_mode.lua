@@ -6,27 +6,27 @@ end
 
 function CRikiOhGameMode:PrepareBuildings()		
 	local towers = Entities:FindByName(nil, "dota_goodguys_tower1_top")
-	towers:ForceKill(false)
+	if towerse ~= nil then towers:ForceKill(false) end
 	towers = Entities:FindByName(nil, "dota_goodguys_tower1_mid")
-	towers:ForceKill(false)
+	if towerse ~= nil then towers:ForceKill(false) end
 	towers = Entities:FindByName(nil, "dota_goodguys_tower1_bot")
-	towers:ForceKill(false)
+	if towerse ~= nil then towers:ForceKill(false) end
 	towers = Entities:FindByName(nil, "dota_goodguys_tower2_top")
-	towers:ForceKill(false)
+	if towerse ~= nil then towers:ForceKill(false) end
 	towers = Entities:FindByName(nil, "dota_goodguys_tower2_mid")
-	towers:ForceKill(false)
+	if towerse ~= nil then towers:ForceKill(false) end
 	towers = Entities:FindByName(nil, "dota_goodguys_tower2_bot")
-	towers:ForceKill(false)
+	if towerse ~= nil then towers:ForceKill(false) end
 	towers = Entities:FindByName(nil, "dota_goodguys_tower3_top")
-	towers:ForceKill(false)
+	if towerse ~= nil then towers:ForceKill(false) end
 	towers = Entities:FindByName(nil, "dota_goodguys_tower3_mid")
-	towers:ForceKill(false)
+	if towerse ~= nil then towers:ForceKill(false) end
 	towers = Entities:FindByName(nil, "dota_goodguys_tower3_bot")
-	towers:ForceKill(false)
+	if towerse ~= nil then towers:ForceKill(false) end
 	towers = Entities:FindByName(nil, "dota_goodguys_tower4_top")
-	towers:ForceKill(false)
+	if towerse ~= nil then towers:ForceKill(false) end
 	towers = Entities:FindByName(nil, "dota_goodguys_tower4_bot")
-	towers:ForceKill(false)
+	if towerse ~= nil then towers:ForceKill(false) end
 
 	towers = Entities:FindAllByClassname("npc_dota_tower")
 	for k, v in pairs(towers) do
@@ -94,7 +94,7 @@ function CRikiOhGameMode:OnEntityHurt( event )
 			killedUnit:GetClassname() == "npc_dota_hero_sniper" then
 		self:SpawnAsRiki(killedUnit:GetPlayerID())
 		PlayerResource:SetGold(hero:GetPlayerID(), 
-							   PlayerResource:GetGold(hero:GetPlayerID()) + 1000,
+							   PlayerResource:GetGold(hero:GetPlayerID()) + 1500,
 							   true)
 	else 
 		killedUnit:SetHealth(0)
@@ -117,6 +117,9 @@ function CRikiOhGameMode:OnEntitySpawn(event)
 			spawnedEnt:GetAbilityByIndex(0):SetLevel(1)
 			spawnedEnt:GetAbilityByIndex(1):SetLevel(1)
 			spawnedEnt:SetAbilityPoints(0)
+			PlayerResource:SetGold(spawnedEnt:GetPlayerID(), 
+								   PlayerResource:GetGold(spawnedEnt:GetPlayerID()) + 750,
+								   true)
 		elseif spawnedEnt:GetClassname() == "npc_dota_hero_sniper" then
 			spawnedEnt:GetAbilityByIndex(0):SetLevel(1)
 			spawnedEnt:SetAbilityPoints(0)
@@ -168,7 +171,7 @@ function CRikiOhGameMode:InitGameMode()
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
 	CRikiOhGameMode.started = false
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(1)
-	GameRules:GetGameModeEntity():SetFixedRespawnTime(10.0)
+	GameRules:GetGameModeEntity():SetFixedRespawnTime(30.0)
 	GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen(0.0)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_sniper")
 	GameRules:GetGameModeEntity():SetLoseGoldOnDeath(false)
@@ -189,14 +192,14 @@ function CRikiOhGameMode:OnThink()
 	if not CRikiOhGameMode.started and GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		self:OnGameInProgress()
 		CRikiOhGameMode.started = true
-		GameRules:SendCustomMessage("The Riki has been selected! Protect your ancient for 10 minutes, Snipers!", 
+		GameRules:SendCustomMessage("The Riki has been selected! Protect your ancient for 7 minutes, Snipers!", 
 									DOTA_TEAM_GOODGUYS, 1)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		local survivors = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
 		if survivors == 0 then
 			GameRules:MakeTeamLose(DOTA_TEAM_GOODGUYS)
 			GameRules:SendCustomMessage("The Rikis Win!", DOTA_TEAM_GOODGUYS, 1)
-		elseif GameRules:GetDOTATime(false, false) > 600.0 then
+		elseif GameRules:GetDOTATime(false, false) > 420.0 then
 			GameRules:MakeTeamLose(DOTA_TEAM_BADGUYS)
 			GameRules:SendCustomMessage("The Snipers Win!", DOTA_TEAM_GOODGUYS, 1)
 		end
