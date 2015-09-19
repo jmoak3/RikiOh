@@ -129,7 +129,7 @@ function CRikiOhGameMode:OnEntitySpawn(event)
 			spawnedEnt:SetAbilityPoints(0)
 			local playerID = spawnedEnt:GetPlayerOwnerID()
 			PlayerResource:SetGold(playerID, 0, false)
-			PlayerResource:SetGold(playerID, 2000, true)
+			PlayerResource:SetGold(playerID, 1600, true)
 		end
 	end
 	
