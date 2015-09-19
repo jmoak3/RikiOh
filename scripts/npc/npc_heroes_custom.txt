@@ -20,7 +20,7 @@
 		"StatusHealth"				"1000"
 		
         "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-        "MovementSpeed"             "325"                                       // Speed.
+        "MovementSpeed"             "350"                                       // Speed.
         "MovementTurnRate"          "0.35"                                      // Turning rate.
 
         "Ability1"                  "riki_cloak"                                // Ability 1

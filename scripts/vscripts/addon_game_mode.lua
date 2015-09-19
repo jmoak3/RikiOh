@@ -61,7 +61,7 @@ end
 function CRikiOhGameMode:SpawnAsRiki(playerID)
 	local ent = PlayerResource:GetSelectedHeroEntity(playerID)
 	PlayerResource:SetCustomTeamAssignment(playerID, DOTA_TEAM_BADGUYS)
-	local ent = PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_riki", 2000, 0)
+	local ent = PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_riki", 1250, 0)
 	if ent == nil then return nil end
 	ent:ForceKill(false)
 	GameRules:SendCustomMessage("Another Sniper joins the Rikis!", DOTA_TEAM_GOODGUYS, 1)

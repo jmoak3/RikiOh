@@ -2,7 +2,7 @@
 {
 	maps			"rikinfection"
 	"IsPlayable"	"1"
-	"dota"
+	"rikinfection"
 	{
 		"MaxPlayers"                    "24"
 	}
