@@ -25,8 +25,8 @@
 
         "Ability1"                  "riki_cloak"                                // Ability 1
         "Ability2"                  "riki_blur"	                                // Ability 2
-        "Ability3"                  ""                                          // Ability 3
-        "Ability4"                  ""                                          // Ability 4
+        "Ability3"                  "riki_smoke"                        		// Ability 3
+        "Ability4"                  ""             								// Ability 4
         "VisionNighttimeRange"      "1800"                                      // Range of vision at night time.
     }
 	
@@ -47,7 +47,7 @@
 		"StatusHealth"				"1000"
 
         "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-        "MovementSpeed"             "250"                                       // Speed.
+        "MovementSpeed"             "225"                                       // Speed.
         "MovementTurnRate"          "0.7"                                       // Turning rate.
 
         "Ability1"                  "sniper_shield"                             // Ability 1

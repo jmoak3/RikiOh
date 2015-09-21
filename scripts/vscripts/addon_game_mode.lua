@@ -61,7 +61,7 @@ end
 function CRikiOhGameMode:SpawnAsRiki(playerID)
 	local ent = PlayerResource:GetSelectedHeroEntity(playerID)
 	PlayerResource:SetCustomTeamAssignment(playerID, DOTA_TEAM_BADGUYS)
-	local ent = PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_riki", 1250, 0)
+	local ent = PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_riki", 2000, 0)
 	if ent == nil then return nil end
 	ent:ForceKill(false)
 	GameRules:SendCustomMessage("Another Sniper joins the Rikis!", DOTA_TEAM_GOODGUYS, 1)
@@ -81,7 +81,7 @@ function CRikiOhGameMode:OnEntityHurt( event )
 
 	local currHealth = killedUnit:GetHealth()
 	local maxHealth = killedUnit:GetMaxHealth()
-	local dmgModifier = 1
+	local dmgModifier = 5 --always kill
 	if hero:HasItemInInventory("item_broadsword") then dmgModifier = dmgModifier + 1 end
 	if hero:GetClassname() == "npc_dota_hero_riki" then dmgModifier = dmgModifier + 1 end
 	if killedUnit:HasItemInInventory("item_chainmail") then dmgModifier = dmgModifier - 1 end
@@ -116,9 +116,10 @@ function CRikiOhGameMode:OnEntitySpawn(event)
 		if spawnedEnt:GetClassname() == "npc_dota_hero_riki" then
 			spawnedEnt:GetAbilityByIndex(0):SetLevel(1)
 			spawnedEnt:GetAbilityByIndex(1):SetLevel(1)
+			spawnedEnt:GetAbilityByIndex(2):SetLevel(1)
 			spawnedEnt:SetAbilityPoints(0)
 			PlayerResource:SetGold(spawnedEnt:GetPlayerID(), 
-								   PlayerResource:GetGold(spawnedEnt:GetPlayerID()) + 750,
+								   PlayerResource:GetGold(spawnedEnt:GetPlayerID()) + 1500,
 								   true)
 		elseif spawnedEnt:GetClassname() == "npc_dota_hero_sniper" then
 			spawnedEnt:GetAbilityByIndex(0):SetLevel(1)
@@ -129,11 +130,9 @@ function CRikiOhGameMode:OnEntitySpawn(event)
 			spawnedEnt:SetAbilityPoints(0)
 			local playerID = spawnedEnt:GetPlayerOwnerID()
 			PlayerResource:SetGold(playerID, 0, false)
-			PlayerResource:SetGold(playerID, 1600, true)
+			PlayerResource:SetGold(playerID, 2000, true)
 		end
 	end
-	
-	
 end
 
 function CRikiOhGameMode:OnPlayerLevel(event)	
@@ -145,7 +144,7 @@ end
 function CRikiOhGameMode:OnGameInProgress()
     GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 24)
 	local totalPlayers = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
-	for i=0,totalPlayers/8 do
+	for i=0,totalPlayers/6 do
 		local numPlayers = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
 		local badGuy = PlayerResource:GetNthPlayerIDOnTeam(DOTA_TEAM_GOODGUYS, 
 														   math.random(1, numPlayers))
@@ -171,7 +170,7 @@ function CRikiOhGameMode:InitGameMode()
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
 	CRikiOhGameMode.started = false
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel(1)
-	GameRules:GetGameModeEntity():SetFixedRespawnTime(30.0)
+	GameRules:GetGameModeEntity():SetFixedRespawnTime(15.0)
 	GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen(0.0)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_sniper")
 	GameRules:GetGameModeEntity():SetLoseGoldOnDeath(false)
@@ -182,7 +181,8 @@ function CRikiOhGameMode:InitGameMode()
 	GameRules:GetGameModeEntity():SetRuneEnabled(4, false)
 	GameRules:SetHeroSelectionTime(30.0)
 	GameRules:SetGoldPerTick(0)
-	GameRules:SetPreGameTime(35.0)
+	GameRules:SetPreGameTime(45.0)
+	GameRules:SetTreeRegrowTime(90.0)
     GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_GOODGUYS, 24)
     GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 0)
 	self:PrepareBuildings()	
@@ -192,7 +192,7 @@ function CRikiOhGameMode:OnThink()
 	if not CRikiOhGameMode.started and GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		self:OnGameInProgress()
 		CRikiOhGameMode.started = true
-		GameRules:SendCustomMessage("The Riki has been selected! Protect your ancient for 7 minutes, Snipers!", 
+		GameRules:SendCustomMessage("The Riki has been selected! Survive for 7 minutes, Snipers!", 
 									DOTA_TEAM_GOODGUYS, 1)
 	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		local survivors = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)

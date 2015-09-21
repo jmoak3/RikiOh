@@ -13,10 +13,10 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_1"
 		"AbilityCastPoint"					"0.0"
-		"AbilityCooldown"					"7.0"
+		"AbilityCooldown"					"5.5"
 		"AbilityManaCost"					"0"
-		"AbilityDuration"					"2.0"
-		"AbilityTextureName"			"riki_permanent_invisibility"
+		"AbilityDuration"					"2.5"
+		"AbilityTextureName"				"riki_permanent_invisibility"
 		"Maxlevel"							"1"
 
 		"OnSpellStart"
@@ -102,6 +102,43 @@
 	}
 	
 	//=================================================================================================================
+	// Riki: Smoke
+	//=================================================================================================================
+	"riki_smoke"
+	{
+		"BaseClass"							"riki_smoke_screen"
+		"AbilityName"						"riki_smoke"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityTextureName"				"riki_smoke_screen"
+		"Maxlevel"							"1"
+		"AbilityCastRange"				 	"600"
+		"AbilityCastPoint"					"0.3"
+		"AbilityCooldown"					"15"
+		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCastPoint"					"0.0"
+		"AbilityManaCost"					"0"
+		"AbilityDuration"					"5.0"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"320"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_rate"				"70"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed_reduction"	"10"
+			}
+		}
+	}
+	
+	//=================================================================================================================
 	// Sniper: Shield
 	//=================================================================================================================
 	"sniper_shield"
@@ -113,7 +150,7 @@
 		"AbilityCastPoint"					"0.0"
 		"AbilityCooldown"					"2.0"
 		"AbilityManaCost"					"0"
-		"AbilityDuration"					"0.5"
+		"AbilityDuration"					"0.3"
 		"AbilityTextureName"				"faceless_void_time_lock"
 		"Maxlevel"							"1"
 
@@ -151,3 +188,5 @@
 		}
 	}
 }
+
+
